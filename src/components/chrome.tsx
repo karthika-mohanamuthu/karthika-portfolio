@@ -81,7 +81,8 @@ export function Nav() {
       },
       { rootMargin: "-45% 0px -50% 0px" },
     );
-    nav.forEach(({ id }) => {
+    // Include the hero so the highlight clears when back at the top.
+    ["top", ...nav.map((n) => n.id)].forEach((id) => {
       const el = document.getElementById(id);
       if (el) io.observe(el);
     });

@@ -15,15 +15,15 @@ function RotatingRole() {
     return () => clearInterval(t);
   }, []);
   return (
-    <span className="relative inline-grid h-[1.15em] overflow-hidden align-bottom">
-      <AnimatePresence mode="popLayout" initial={false}>
+    <span className="relative block h-[1.2em] overflow-hidden leading-[1.2]">
+      <AnimatePresence initial={false}>
         <motion.span
           key={profile.roles[i]}
-          initial={{ y: "100%", opacity: 0, rotateX: -60 }}
-          animate={{ y: "0%", opacity: 1, rotateX: 0 }}
-          exit={{ y: "-100%", opacity: 0, rotateX: 60 }}
-          transition={{ duration: 0.7, ease }}
-          className="text-vivid col-start-1 row-start-1 whitespace-nowrap"
+          initial={{ y: "105%" }}
+          animate={{ y: "0%" }}
+          exit={{ y: "-105%" }}
+          transition={{ duration: 0.6, ease }}
+          className="text-vivid absolute inset-x-0 top-0 block whitespace-nowrap"
         >
           {profile.roles[i]}
         </motion.span>
@@ -134,7 +134,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.85, ease }}
-              className="mt-2 block text-[0.62em] [perspective:600px]"
+              className="mt-2 block text-[0.62em]"
             >
               <RotatingRole />
             </motion.span>
