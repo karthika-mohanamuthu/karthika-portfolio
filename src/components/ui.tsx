@@ -6,27 +6,26 @@ import {
   useInView,
   useMotionTemplate,
   useMotionValue,
-  useSpring,
   type HTMLMotionProps,
 } from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
-const ease = [0.22, 1, 0.36, 1] as const;
+export const ease = [0.22, 1, 0.36, 1] as const;
 
 /** Fades + lifts children into view once. */
 export function Reveal({
   children,
   delay = 0,
-  y = 28,
+  y = 20,
   className,
   ...rest
 }: { children: ReactNode; delay?: number; y?: number } & HTMLMotionProps<"div">) {
   return (
     <motion.div
-      initial={{ opacity: 0, y, filter: "blur(8px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      initial={{ opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.8, delay, ease }}
+      transition={{ duration: 0.7, delay, ease }}
       className={className}
       {...rest}
     >
@@ -43,7 +42,7 @@ export function CountUp({ to, decimals = 0, suffix = "" }: { to: number; decimal
 
   useEffect(() => {
     if (!inView) return;
-    const controls = animate(0, to, { duration: 1.8, ease, onUpdate: setVal });
+    const controls = animate(0, to, { duration: 1.6, ease, onUpdate: setVal });
     return () => controls.stop();
   }, [inView, to]);
 
@@ -55,19 +54,11 @@ export function CountUp({ to, decimals = 0, suffix = "" }: { to: number; decimal
   );
 }
 
-/** Glass card with a cursor-following colour spotlight. */
-export function SpotlightCard({
-  children,
-  className = "",
-  color = "rgba(244,63,158,0.22)",
-}: {
-  children: ReactNode;
-  className?: string;
-  color?: string;
-}) {
-  const x = useMotionValue(-400);
-  const y = useMotionValue(-400);
-  const bg = useMotionTemplate`radial-gradient(420px circle at ${x}px ${y}px, ${color}, transparent 65%)`;
+/** Card with a faint cursor-following highlight and border glow. */
+export function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
+  const x = useMotionValue(-500);
+  const y = useMotionValue(-500);
+  const bg = useMotionTemplate`radial-gradient(360px circle at ${x}px ${y}px, rgba(142,162,255,0.07), transparent 70%)`;
 
   return (
     <div
@@ -77,59 +68,30 @@ export function SpotlightCard({
         y.set(e.clientY - r.top);
       }}
       onPointerLeave={() => {
-        x.set(-400);
-        y.set(-400);
+        x.set(-500);
+        y.set(-500);
       }}
-      className={`ring-vivid group relative overflow-hidden rounded-3xl bg-white/[0.035] backdrop-blur-xl transition-transform duration-500 hover:-translate-y-1 ${className}`}
+      className={`group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] transition-colors duration-300 hover:border-white/[0.16] ${className}`}
     >
-      <motion.div aria-hidden className="pointer-events-none absolute inset-0 -z-10" style={{ background: bg }} />
-      {children}
+      <motion.div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: bg }} />
+      <div className="relative">{children}</div>
     </div>
-  );
-}
-
-/** Element that gently pulls toward the cursor. */
-export function Magnetic({ children, strength = 0.35 }: { children: ReactNode; strength?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const x = useSpring(0, { stiffness: 220, damping: 15 });
-  const y = useSpring(0, { stiffness: 220, damping: 15 });
-  return (
-    <motion.div
-      ref={ref}
-      style={{ x, y }}
-      className="inline-block"
-      onPointerMove={(e) => {
-        if (e.pointerType !== "mouse" || !ref.current) return;
-        const r = ref.current.getBoundingClientRect();
-        x.set((e.clientX - (r.left + r.width / 2)) * strength);
-        y.set((e.clientY - (r.top + r.height / 2)) * strength);
-      }}
-      onPointerLeave={() => {
-        x.set(0);
-        y.set(0);
-      }}
-    >
-      {children}
-    </motion.div>
   );
 }
 
 export function SectionHeading({ kicker, title, sub }: { kicker: string; title: ReactNode; sub?: string }) {
   return (
-    <Reveal className="mb-12 max-w-3xl">
-      <p className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-pink">
-        <span className="mr-3 inline-block h-px w-10 bg-gradient-to-r from-pink to-orange align-middle" />
-        {kicker}
-      </p>
-      <h2 className="font-display text-4xl leading-[1.02] font-bold tracking-tight sm:text-6xl">{title}</h2>
-      {sub && <p className="mt-5 text-lg text-haze">{sub}</p>}
+    <Reveal className="mb-12 max-w-2xl">
+      <p className="mb-4 font-mono text-xs tracking-[0.2em] text-accent uppercase">{kicker}</p>
+      <h2 className="text-3xl leading-tight font-semibold tracking-tight sm:text-4xl">{title}</h2>
+      {sub && <p className="mt-4 text-base leading-relaxed text-haze sm:text-lg">{sub}</p>}
     </Reveal>
   );
 }
 
 export function Chip({ children }: { children: ReactNode }) {
   return (
-    <span className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-sm font-medium text-white/85 transition-colors hover:border-pink/60 hover:bg-pink/10 hover:text-white">
+    <span className="rounded-md border border-white/[0.08] bg-white/[0.03] px-2.5 py-1 text-[13px] text-zinc-300">
       {children}
     </span>
   );

@@ -45,25 +45,21 @@ export const projects = [
     title: "Legacy .NET modernization",
     body: "Modernized ADM enterprise applications from .NET Framework 3.5 to 4.8, reviewing configuration, dependencies, application components and environment readiness.",
     tag: "3.5 → 4.8",
-    hue: "violet",
   },
   {
     title: "On-premises to Azure migration",
     body: "Supported migration of enterprise applications to Microsoft Azure and resolved environment-specific post-migration issues with infrastructure teams.",
     tag: "Cloud",
-    hue: "cyan",
   },
   {
     title: "Application security",
     body: "Implemented Azure AD authentication, OAuth 2.0, RBAC and Azure Key Vault to secure applications.",
     tag: "Zero-trust",
-    hue: "pink",
   },
   {
     title: "TCS .NET training project",
     body: "Built and deployed an ASP.NET MVC and Entity Framework application with a 6-member Agile team; earned an excellence award.",
     tag: "Award",
-    hue: "orange",
   },
 ] as const;
 
