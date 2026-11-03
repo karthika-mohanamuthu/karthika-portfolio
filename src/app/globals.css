@@ -1,11 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  /* Neutral base + a single restrained accent */
-  --color-ink: #09090b;
-  --color-haze: #a1a1aa;
-  --color-accent: #8ea2ff;
-  --color-accent-deep: #5b72f0;
+  /* Light theme, one hue: .NET violet in tints and shades */
+  --color-ink: #1a1033;
+  --color-haze: #5f5878;
+  --color-paper: #faf8ff;
+  --color-accent: #5b2ee0;
+  --color-accent-deep: #3f1db0;
+  --color-accent-soft: #efe9ff;
 
   --font-display: var(--font-geist), ui-sans-serif, system-ui;
   --font-sans: var(--font-geist), ui-sans-serif, system-ui;
@@ -28,23 +30,23 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 96px;
-  background: var(--color-ink);
-  color-scheme: dark;
+  background: var(--color-paper);
+  color-scheme: light;
 }
 
 body {
-  background: var(--color-ink);
-  color: #ededf0;
+  background: var(--color-paper);
+  color: var(--color-ink);
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--color-accent) 35%, transparent);
-  color: white;
+  background: color-mix(in srgb, var(--color-accent) 20%, transparent);
+  color: var(--color-ink);
 }
 
-/* Subtle white → grey headline gradient */
+/* Single-hue headline gradient: deep ink → violet */
 .text-sheen {
-  background-image: linear-gradient(180deg, #ffffff 0%, #b4b4bd 100%);
+  background-image: linear-gradient(90deg, var(--color-ink) 0%, var(--color-accent) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

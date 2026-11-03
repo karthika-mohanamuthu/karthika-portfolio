@@ -58,7 +58,7 @@ export function CountUp({ to, decimals = 0, suffix = "" }: { to: number; decimal
 export function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
   const x = useMotionValue(-500);
   const y = useMotionValue(-500);
-  const bg = useMotionTemplate`radial-gradient(360px circle at ${x}px ${y}px, rgba(142,162,255,0.07), transparent 70%)`;
+  const bg = useMotionTemplate`radial-gradient(360px circle at ${x}px ${y}px, rgba(91,46,224,0.06), transparent 70%)`;
 
   return (
     <div
@@ -71,7 +71,7 @@ export function Card({ children, className = "" }: { children: ReactNode; classN
         x.set(-500);
         y.set(-500);
       }}
-      className={`group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] transition-colors duration-300 hover:border-white/[0.16] ${className}`}
+      className={`group relative overflow-hidden rounded-2xl border border-accent/15 bg-white transition-colors duration-300 hover:border-accent/40 ${className}`}
     >
       <motion.div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: bg }} />
       <div className="relative">{children}</div>
@@ -91,7 +91,7 @@ export function SectionHeading({ kicker, title, sub }: { kicker: string; title: 
 
 export function Chip({ children }: { children: ReactNode }) {
   return (
-    <span className="rounded-md border border-white/[0.08] bg-white/[0.03] px-2.5 py-1 text-[13px] text-zinc-300">
+    <span className="rounded-md border border-accent/15 bg-accent/5 px-2.5 py-1 text-[13px] text-slate-700">
       {children}
     </span>
   );

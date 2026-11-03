@@ -21,7 +21,7 @@ function RotatingRole() {
           animate={{ y: "0%" }}
           exit={{ y: "-105%" }}
           transition={{ duration: 0.6, ease }}
-          className="absolute inset-x-0 top-0 block whitespace-nowrap text-haze"
+          className="absolute inset-x-0 top-0 block whitespace-nowrap text-accent"
         >
           {profile.roles[i]}
         </motion.span>
@@ -41,15 +41,15 @@ const panel: [string, string][] = [
 
 function ProfilePanel() {
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-zinc-950/70 shadow-2xl shadow-black/40 backdrop-blur">
-      <div className="flex items-center gap-2 border-b border-white/[0.06] px-4 py-3">
-        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-        <span className="ml-3 font-mono text-xs text-zinc-500">profile.json</span>
+    <div className="overflow-hidden rounded-2xl border border-accent/30 bg-[#1d1240] shadow-2xl shadow-accent/30 backdrop-blur">
+      <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
+        <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+        <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+        <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+        <span className="ml-3 font-mono text-xs text-violet-300/60">profile.json</span>
       </div>
       <div className="overflow-x-auto p-5 font-mono text-[13px] leading-7 sm:p-6">
-        <div className="text-zinc-500">{"{"}</div>
+        <div className="text-violet-300/60">{"{"}</div>
         {panel.map(([k, v], i) => (
           <motion.div
             key={k}
@@ -58,18 +58,18 @@ function ProfilePanel() {
             transition={{ delay: 0.9 + i * 0.12, duration: 0.5, ease }}
             className="pl-5 whitespace-nowrap"
           >
-            <span className="text-accent">&quot;{k}&quot;</span>
-            <span className="text-zinc-500">: </span>
-            <span className="text-zinc-200">&quot;{v}&quot;</span>
-            {i < panel.length - 1 && <span className="text-zinc-500">,</span>}
+            <span className="text-violet-300">&quot;{k}&quot;</span>
+            <span className="text-violet-300/60">: </span>
+            <span className="text-white">&quot;{v}&quot;</span>
+            {i < panel.length - 1 && <span className="text-violet-300/60">,</span>}
           </motion.div>
         ))}
-        <div className="text-zinc-500">
+        <div className="text-violet-300/60">
           {"}"}
           <motion.span
             animate={{ opacity: [1, 0, 1] }}
             transition={{ duration: 1.1, repeat: Infinity }}
-            className="ml-1 inline-block h-4 w-[7px] translate-y-[3px] bg-accent/80"
+            className="ml-1 inline-block h-4 w-[7px] translate-y-[3px] bg-violet-300"
           />
         </div>
       </div>
@@ -91,9 +91,9 @@ export function Hero() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[13px] text-zinc-300"
+            className="inline-flex items-center gap-2 rounded-full border border-accent/15 bg-accent/5 px-3 py-1 text-[13px] text-slate-700"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
             Open to relocation · {profile.location}
           </motion.span>
 
@@ -124,14 +124,14 @@ export function Hero() {
           >
             <a
               href="#projects"
-              className="group inline-flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-zinc-200"
+              className="group inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-medium text-white shadow-lg shadow-accent/25 transition-colors hover:bg-accent-deep"
             >
               View projects
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
             </a>
             <a
               href={`mailto:${profile.email}`}
-              className="inline-flex items-center gap-2 rounded-lg border border-white/12 px-5 py-2.5 text-sm font-medium text-zinc-200 transition-colors hover:border-white/25 hover:bg-white/[0.04]"
+              className="inline-flex items-center gap-2 rounded-lg border border-accent/20 px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:border-accent/40 hover:bg-accent/5"
             >
               <Mail size={16} /> Email me
             </a>
@@ -139,7 +139,7 @@ export function Hero() {
               href={profile.linkedin}
               target="_blank"
               rel="noopener"
-              className="group inline-flex items-center gap-2 rounded-lg border border-white/12 px-5 py-2.5 text-sm font-medium text-zinc-200 transition-colors hover:border-white/25 hover:bg-white/[0.04]"
+              className="group inline-flex items-center gap-2 rounded-lg border border-accent/20 px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:border-accent/40 hover:bg-accent/5"
             >
               LinkedIn
               <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -160,11 +160,11 @@ export function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="grid grid-cols-2 divide-white/[0.08] rounded-2xl border border-white/[0.08] bg-white/[0.02] sm:grid-cols-4 sm:divide-x lg:col-span-2"
+          className="grid grid-cols-2 divide-accent/15 rounded-2xl border border-accent/15 bg-white sm:grid-cols-4 sm:divide-x lg:col-span-2"
         >
           {stats.map((s) => (
             <div key={s.label} className="px-6 py-5">
-              <div className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+              <div className="text-3xl font-semibold tracking-tight text-accent sm:text-4xl">
                 <CountUp to={s.value} decimals={s.decimals} suffix={s.suffix} />
               </div>
               <div className="mt-1 text-sm text-haze">{s.label}</div>

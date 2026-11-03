@@ -9,8 +9,9 @@ import { nav } from "@/lib/data";
 export function Backdrop() {
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-      <div className="absolute -top-[30%] left-1/2 h-[70vmax] w-[70vmax] -translate-x-1/2 animate-drift rounded-full bg-accent-deep/[0.12] blur-[140px]" />
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_at_top,#000_20%,transparent_70%)]" />
+      <div className="absolute -top-[25%] -left-[10%] h-[60vmax] w-[60vmax] animate-drift rounded-full bg-accent/[0.16] blur-[140px]" />
+      <div className="absolute -top-[10%] -right-[15%] h-[45vmax] w-[45vmax] animate-drift rounded-full bg-[#a78bfa]/[0.18] blur-[130px] [animation-delay:-12s]" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(91,46,224,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(91,46,224,0.05)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_at_top,#000_20%,transparent_70%)]" />
     </div>
   );
 }
@@ -38,7 +39,7 @@ export function Nav() {
       { rootMargin: "-45% 0px -50% 0px" },
     );
     // Include the hero so the highlight clears when back at the top.
-    ["top", ...nav.map((n) => n.id)].forEach((id) => {
+    ["top", "delivery", ...nav.map((n) => n.id)].forEach((id) => {
       const el = document.getElementById(id);
       if (el) io.observe(el);
     });
@@ -54,7 +55,7 @@ export function Nav() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, delay: 0.1 }}
       className={`fixed inset-x-0 top-0 z-40 border-b transition-colors duration-300 ${
-        scrolled ? "border-white/[0.08] bg-ink/75 backdrop-blur-xl" : "border-transparent"
+        scrolled ? "border-accent/15 bg-white/75 backdrop-blur-xl" : "border-transparent"
       }`}
     >
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
@@ -68,7 +69,7 @@ export function Nav() {
               <a
                 href={`#${id}`}
                 className={`relative z-10 block rounded-md px-3.5 py-1.5 text-sm transition-colors ${
-                  active === id ? "text-white" : "text-haze hover:text-white"
+                  active === id ? "text-ink" : "text-haze hover:text-ink"
                 }`}
               >
                 {label}
@@ -76,7 +77,7 @@ export function Nav() {
               {active === id && (
                 <motion.span
                   layoutId="nav-pill"
-                  className="absolute inset-0 rounded-md bg-white/[0.07]"
+                  className="absolute inset-0 rounded-md bg-accent/10"
                   transition={{ type: "spring", stiffness: 400, damping: 35 }}
                 />
               )}
@@ -89,7 +90,7 @@ export function Nav() {
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((o) => !o)}
-          className="grid h-9 w-9 place-items-center rounded-md border border-white/10 md:hidden"
+          className="grid h-9 w-9 place-items-center rounded-md border border-accent/15 md:hidden"
         >
           {open ? <X size={18} /> : <Menu size={18} />}
         </button>
@@ -101,11 +102,11 @@ export function Nav() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden border-t border-white/[0.08] bg-ink/95 px-6 backdrop-blur-xl md:hidden"
+            className="overflow-hidden border-t border-accent/15 bg-white/95 px-6 backdrop-blur-xl md:hidden"
           >
             {nav.map(({ id, label }) => (
               <li key={id}>
-                <a href={`#${id}`} onClick={() => setOpen(false)} className="block py-3 text-base text-zinc-200">
+                <a href={`#${id}`} onClick={() => setOpen(false)} className="block py-3 text-base text-ink">
                   {label}
                 </a>
               </li>
