@@ -1,10 +1,10 @@
 "use client";
 
 import { AnimatePresence, motion, useScroll, useTransform } from "motion/react";
-import { ArrowRight, ArrowUpRight, Mail } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Download, Mail } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { profile, stats } from "@/lib/data";
-import { CountUp, ease } from "./ui";
+import { CountUp, ease, useYearsOfExperience } from "./ui";
 
 function RotatingRole() {
   const [i, setI] = useState(0);
@@ -82,6 +82,9 @@ export function Hero() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [0, 80]);
   const opacity = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
+  const years = useYearsOfExperience();
+  // Before the browser computes the live figure, fall back to a safe "4+".
+  const [leadBefore, leadAfter] = profile.lead.split("{years}");
 
   return (
     <section ref={ref} id="top" className="relative flex min-h-dvh items-center pt-28 pb-16">
@@ -113,7 +116,9 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.45, ease }}
             className="mt-6 max-w-xl text-lg leading-relaxed text-haze"
           >
-            {profile.lead}
+            {leadBefore}
+            {years ?? "4+"}
+            {leadAfter}
           </motion.p>
 
           <motion.div
@@ -123,12 +128,21 @@ export function Hero() {
             className="mt-8 flex flex-wrap gap-3"
           >
             <a
-              href="#projects"
+              href="#work"
               className="group inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-medium text-white shadow-lg shadow-accent/25 transition-colors hover:bg-accent-deep"
             >
-              View projects
+              View my work
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
             </a>
+            {profile.resumeUrl && (
+              <a
+                href={profile.resumeUrl}
+                download
+                className="inline-flex items-center gap-2 rounded-lg border border-accent/20 px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:border-accent/40 hover:bg-accent/5"
+              >
+                <Download size={16} /> Résumé
+              </a>
+            )}
             <a
               href={`mailto:${profile.email}`}
               className="inline-flex items-center gap-2 rounded-lg border border-accent/20 px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:border-accent/40 hover:bg-accent/5"
@@ -165,7 +179,7 @@ export function Hero() {
           {stats.map((s) => (
             <div key={s.label} className="px-6 py-5">
               <div className="text-3xl font-semibold tracking-tight text-accent sm:text-4xl">
-                <CountUp to={s.value} decimals={s.decimals} suffix={s.suffix} />
+                <CountUp to={s.key === "years" ? (years ?? 0) : s.value} decimals={s.decimals} suffix={s.suffix} />
               </div>
               <div className="mt-1 text-sm text-haze">{s.label}</div>
             </div>

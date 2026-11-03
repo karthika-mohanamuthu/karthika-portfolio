@@ -8,9 +8,22 @@ import {
   useMotionValue,
   type HTMLMotionProps,
 } from "motion/react";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
+import { profile } from "@/lib/data";
 
 export const ease = [0.22, 1, 0.36, 1] as const;
+
+/* Years of experience, computed in the browser from the career start date so the
+ * figure never goes stale. The server snapshot is null (the static HTML can't know
+ * "today"), which also avoids hydration mismatches. */
+let cachedYears: number | undefined;
+const noopSubscribe = () => () => {};
+const getYears = () =>
+  (cachedYears ??=
+    Math.floor(((Date.now() - new Date(profile.careerStart).getTime()) / (365.25 * 24 * 3600 * 1000)) * 10) / 10);
+export function useYearsOfExperience(): number | null {
+  return useSyncExternalStore(noopSubscribe, getYears, () => null);
+}
 
 /** Fades + lifts children into view once. */
 export function Reveal({
